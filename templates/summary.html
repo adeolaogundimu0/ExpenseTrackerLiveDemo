@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Expense Summary</h1>
+        
+        <h2>Expenses:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Expense Name</th>
+                    <th>Category</th>
+                    <th>Amount ($)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                <tr>
+                    <td>{{ expense.name }}</td>
+                    <td>{{ expense.category }}</td>
+                    <td>${{ "%.2f"|format(expense.amount) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Summary:</h2>
+        <p>Total Spent: ${{ "%.2f"|format(summary.total_spent) }}</p>
+        <p>Remaining Budget: ${{ "%.2f"|format(summary.remaining_budget) }}</p>
+        <p>Daily Budget: ${{ "%.2f"|format(summary.daily_budget) }}</p>
+        
+        <a href="/add">Add More Expenses</a>
+    </div>
+</body>
+</html>
