@@ -36,6 +36,11 @@
         <p>Daily Budget: ${{ "%.2f"|format(summary.daily_budget) }}</p>
         
         <a href="/add">Add More Expenses</a>
+        <form action="/reset" method="POST" style="margin-top: 20px;">
+            <button type="submit" style="background-color: red; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+                Reset Budget and Summary
+            </button>
+        </form>
     </div>
 </body>
 </html>

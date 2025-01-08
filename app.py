@@ -46,6 +46,8 @@ def add_expense():
 def summary():
     if "budget" not in session:
         return redirect(url_for("home"))  # Ensure budget is set before viewing summary
+    
+    
 
     budget = session["budget"]
     expenses, summary_data = summarize_expense(EXPENSE_FILE, budget)
@@ -71,7 +73,7 @@ def summarize_expense(expense_file_path, budget):
     for expense in expenses:
         amount_by_category[expense.category] = amount_by_category.get(expense.category, 0) + expense.amount
 
-    total_spent = sum(expense.amount for expense in expenses)
+    total_spent = round(sum(expense.amount for expense in expenses),2)
     remaining_budget = budget - total_spent
 
     now = datetime.datetime.now()
@@ -90,6 +92,12 @@ def summarize_expense(expense_file_path, budget):
 def clear_expenses_file():
     with open("expenses.csv", "w", encoding="utf-8") as f:
         pass
+
+@ExpenseApp.route("/reset", methods=["POST"])
+def reset():
+    session.clear()  # Clear session data
+    clear_expenses_file()  # Clear the expenses file
+    return redirect(url_for("home"))  # Redirect to home page
 
 
 if __name__ == "__main__":
